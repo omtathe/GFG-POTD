@@ -1,0 +1,118 @@
+/*
+
+JAVA LANGUAGE 
+
+Queue Reversal
+Difficulty: Easy
+
+Given a queue q containing integer elements, your task is to reverse the queue.
+
+Examples:
+Input: q = [5, 10, 15, 20, 25]
+Output: [25, 20, 15, 10, 5]
+
+Input: q = [1, 2, 3, 4, 5]
+Output: [5, 4, 3, 2, 1]
+
+Constraints:
+1 ≤ q.size() ≤ 10^3
+0 ≤ q[i] ≤ 10^5
+*/
+
+import java.util.*;
+
+class Solution {
+    public void reverseQueue(Queue<Integer> q) {
+        if (q.isEmpty()) return;
+        int front = q.poll();
+        reverseQueue(q);
+        q.add(front);
+    }
+
+    public static void main(String[] args) {
+        Queue<Integer> q = new LinkedList<>(Arrays.asList(5, 10, 15, 20, 25));
+        Solution sol = new Solution();
+        sol.reverseQueue(q);
+        System.out.println(q);
+    }
+}
+
+PYTHON LANGUAGE
+
+"""
+Queue Reversal
+Difficulty: Easy
+
+Given a queue q containing integer elements, your task is to reverse the queue.
+
+Examples:
+Input: q = [5, 10, 15, 20, 25]
+Output: [25, 20, 15, 10, 5]
+
+Input: q = [1, 2, 3, 4, 5]
+Output: [5, 4, 3, 2, 1]
+
+Constraints:
+1 ≤ len(q) ≤ 10^3
+0 ≤ q[i] ≤ 10^5
+"""
+
+from collections import deque
+
+def reverseQueue(q: deque):
+    if not q:
+        return
+    front = q.popleft()
+    reverseQueue(q)
+    q.append(front)
+
+# Example
+q = deque([5, 10, 15, 20, 25])
+reverseQueue(q)
+print(list(q))
+
+
+CPP LANGUAGE
+
+/*
+Queue Reversal
+Difficulty: Easy
+
+Given a queue q containing integer elements, your task is to reverse the queue.
+
+Examples:
+Input: q = [5, 10, 15, 20, 25]
+Output: [25, 20, 15, 10, 5]
+
+Input: q = [1, 2, 3, 4, 5]
+Output: [5, 4, 3, 2, 1]
+
+Constraints:
+1 ≤ q.size() ≤ 10^3
+0 ≤ q[i] ≤ 10^5
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void reverseQueue(queue<int> &q) {
+    if (q.empty()) return;
+    int front = q.front();
+    q.pop();
+    reverseQueue(q);
+    q.push(front);
+}
+
+int main() {
+    queue<int> q;
+    q.push(5); q.push(10); q.push(15); q.push(20); q.push(25);
+
+    reverseQueue(q);
+
+    while (!q.empty()) {
+        cout << q.front() << " ";
+        q.pop();
+    }
+    return 0;
+}
+
