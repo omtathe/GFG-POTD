@@ -1,0 +1,71 @@
+📅 25 September 2025
+📝 Question: Generate Binary Numbers
+//
+// JAVA
+//
+import java.util.*;
+
+class Solution {
+    public ArrayList<String> generateBinary(int n) {
+        ArrayList<String> result = new ArrayList<>();
+        Queue<String> q = new LinkedList<>();
+        q.add("1");
+        
+        while (n-- > 0) {
+            String curr = q.poll();
+            result.add(curr);
+
+            q.add(curr + "0");
+            q.add(curr + "1");
+        }
+        
+        return result;
+    }
+}
+
+//
+//PYTHON
+//
+from collections import deque
+
+class Solution:
+    def generateBinary(self, n):
+        result = []
+        q = deque()
+        q.append("1")
+
+        while n > 0:
+            curr = q.popleft()
+            result.append(curr)
+
+            q.append(curr + "0")
+            q.append(curr + "1")
+
+            n -= 1
+
+        return result
+//
+//CPP
+//
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    vector<string> generateBinary(int n) {
+        vector<string> result;
+        queue<string> q;
+        q.push("1");
+
+        while (n-- > 0) {
+            string curr = q.front();
+            q.pop();
+            result.push_back(curr);
+
+            q.push(curr + "0");
+            q.push(curr + "1");
+        }
+
+        return result;
+    }
+};
