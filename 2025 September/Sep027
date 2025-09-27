@@ -1,0 +1,66 @@
+// Minimum K Consecutive Bit Flips
+
+// JAVA
+class Solution {
+    public int kBitFlips(int[] arr, int k) {
+        int n = arr.length;
+        int[] flipped = new int[n];
+        int flipCount = 0, currFlips = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (i >= k) currFlips ^= flipped[i - k];
+
+            if ((arr[i] ^ currFlips) == 0) {
+                if (i + k > n) return -1;
+                flipped[i] = 1;
+                currFlips ^= 1;
+                flipCount++;
+            }
+        }
+        return flipCount;
+    }
+}
+
+//CPP
+class Solution {
+public:
+    int kBitFlips(vector<int>& arr, int k) {
+        int n = arr.size();
+        vector<int> flipped(n, 0);
+        int flipCount = 0, currFlips = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (i >= k) currFlips ^= flipped[i - k];
+
+            if ((arr[i] ^ currFlips) == 0) {
+                if (i + k > n) return -1;
+                flipped[i] = 1;
+                currFlips ^= 1;
+                flipCount++;
+            }
+        }
+        return flipCount;
+    }
+};
+
+
+//Python
+class Solution:
+    def kBitFlips(self, arr, k: int) -> int:
+        n = len(arr)
+        flipped = [0] * n
+        flip_count = 0
+        curr_flips = 0
+
+        for i in range(n):
+            if i >= k:
+                curr_flips ^= flipped[i - k]
+
+            if (arr[i] ^ curr_flips) == 0:
+                if i + k > n:
+                    return -1
+                flipped[i] = 1
+                curr_flips ^= 1
+                flip_count += 1
+
+        return flip_count
