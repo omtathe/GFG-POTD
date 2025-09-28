@@ -1,0 +1,77 @@
+Longest Bounded-Difference Subarray
+
+//PYTHON
+class Solution:
+    def longestSubarray(self, arr, x):
+        from collections import deque
+        n=len(arr)
+        minD,maxD=deque(),deque()
+        left=0;bestStart=0;bestLen=0
+        for right in range(n):
+            while minD and arr[minD[-1]]>=arr[right]:minD.pop()
+            minD.append(right)
+            while maxD and arr[maxD[-1]]<=arr[right]:maxD.pop()
+            maxD.append(right)
+            while arr[maxD[0]]-arr[minD[0]]>x:
+                left+=1
+                if minD[0]<left:minD.popleft()
+                if maxD[0]<left:maxD.popleft()
+            if right-left+1>bestLen:
+                bestLen=right-left+1
+                bestStart=left
+        return arr[bestStart:bestStart+bestLen]
+
+//JAVA
+import java.util.*;
+class Solution {
+    public ArrayList<Integer> longestSubarray(int[] arr, int x) {
+        int n=arr.length;
+        Deque<Integer> minD=new ArrayDeque<>(),maxD=new ArrayDeque<>();
+        int left=0,bestStart=0,bestLen=0;
+        for(int right=0;right<n;right++){
+            while(!minD.isEmpty()&&arr[minD.peekLast()]>=arr[right])minD.pollLast();
+            minD.addLast(right);
+            while(!maxD.isEmpty()&&arr[maxD.peekLast()]<=arr[right])maxD.pollLast();
+            maxD.addLast(right);
+            while(arr[maxD.peekFirst()]-arr[minD.peekFirst()]>x){
+                left++;
+                if(minD.peekFirst()<left)minD.pollFirst();
+                if(maxD.peekFirst()<left)maxD.pollFirst();
+            }
+            if(right-left+1>bestLen){
+                bestLen=right-left+1;
+                bestStart=left;
+            }
+        }
+        ArrayList<Integer> res=new ArrayList<>();
+        for(int i=bestStart;i<bestStart+bestLen;i++)res.add(arr[i]);
+        return res;
+    }
+}
+
+//CPP
+class Solution {
+public:
+    vector<int> longestSubarray(vector<int>& arr, int x) {
+        deque<int> minD, maxD;
+        int n = arr.size(), left = 0, bestStart = 0, bestLen = 0;
+        for (int right = 0; right < n; right++) {
+            while (!minD.empty() && arr[minD.back()] >= arr[right]) minD.pop_back();
+            minD.push_back(right);
+            while (!maxD.empty() && arr[maxD.back()] <= arr[right]) maxD.pop_back();
+            maxD.push_back(right);
+            while (arr[maxD.front()] - arr[minD.front()] > x) {
+                left++;
+                if (minD.front() < left) minD.pop_front();
+                if (maxD.front() < left) maxD.pop_front();
+            }
+            if (right - left + 1 > bestLen) {
+                bestLen = right - left + 1;
+                bestStart = left;
+            }
+        }
+        vector<int> res;
+        for (int i = bestStart; i < bestStart + bestLen; i++) res.push_back(arr[i]);
+        return res;
+    }
+};
