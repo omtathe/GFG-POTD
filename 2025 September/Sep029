@@ -1,0 +1,96 @@
+Maximum subarray sum 2
+
+//Python
+from collections import deque
+import bisect
+
+class Solution:
+    def maxSubarrSum(self, arr, a, b):
+        n = len(arr)
+        prefix = [0] * (n + 1)
+        for i in range(n):
+            prefix[i + 1] = prefix[i] + arr[i]
+
+        import bisect
+        window = []
+        ans = float("-inf")
+
+        for r in range(a, n + 1):
+            # add prefix[r-a]
+            bisect.insort(window, prefix[r - a])
+
+            # remove prefix[r-b-1] if out of range
+            if r - b - 1 >= 0:
+                idx = bisect.bisect_left(window, prefix[r - b - 1])
+                window.pop(idx)
+
+            ans = max(ans, prefix[r] - window[0])
+
+        return int(ans)
+
+
+//Java
+import java.util.*;
+
+class Solution {
+    public int maxSubarrSum(int[] arr, int a, int b) {
+        int n = arr.length;
+        long[] prefix = new long[n + 1];
+
+        for (int i = 0; i < n; i++) {
+            prefix[i + 1] = prefix[i] + arr[i];
+        }
+
+        long ans = Long.MIN_VALUE;
+        TreeMap<Long, Integer> map = new TreeMap<>();
+
+        for (int r = a; r <= n; r++) {
+            long toAdd = prefix[r - a];
+            map.put(toAdd, map.getOrDefault(toAdd, 0) + 1);
+
+            if (r - b - 1 >= 0) {
+                long toRemove = prefix[r - b - 1];
+                map.put(toRemove, map.get(toRemove) - 1);
+                if (map.get(toRemove) == 0) {
+                    map.remove(toRemove);
+                }
+            }
+
+            ans = Math.max(ans, prefix[r] - map.firstKey());
+        }
+
+        return (int) ans;
+    }
+}
+
+
+//Cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int maxSubarrSum(vector<int>& arr, int a, int b) {
+        int n = arr.size();
+        vector<long long> prefix(n + 1, 0);
+
+        for (int i = 0; i < n; i++) {
+            prefix[i + 1] = prefix[i] + arr[i];
+        }
+
+        long long ans = LLONG_MIN;
+        multiset<long long> ms;
+
+        for (int r = a; r <= n; r++) {
+            ms.insert(prefix[r - a]);
+
+            if (r - b - 1 >= 0) {
+                ms.erase(ms.find(prefix[r - b - 1]));
+            }
+
+            ans = max(ans, prefix[r] - *ms.begin());
+        }
+
+        return (int)ans;
+    }
+};
