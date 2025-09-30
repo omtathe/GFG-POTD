@@ -1,0 +1,53 @@
+//Generate all binary strings
+
+//JAVA
+import java.util.*;
+
+class Solution {
+    public ArrayList<String> binstr(int n) {
+        ArrayList<String> ans = new ArrayList<>();
+        int total = 1 << n; // 2^n, safe since n <= 20
+        for (int i = 0; i < total; i++) {
+            String b = Integer.toBinaryString(i);
+            // pad with leading zeros to length n
+            if (b.length() < n) {
+                StringBuilder sb = new StringBuilder();
+                for (int k = 0; k < n - b.length(); k++) sb.append('0');
+                sb.append(b);
+                b = sb.toString();
+            }
+            ans.add(b);
+        }
+        return ans;
+    }
+}
+
+//CPP
+class Solution {
+public:
+    vector<string> binstr(int n) {
+        vector<string> ans;
+        int total = 1 << n; // 2^n
+        for (int i = 0; i < total; i++) {
+            string b = "";
+            for (int j = n - 1; j >= 0; j--) {
+                if (i & (1 << j)) b += '1';
+                else b += '0';
+            }
+            ans.push_back(b);
+        }
+        return ans;
+    }
+};
+
+
+//PYTHON
+class Solution:
+    def binstr(self, n):
+        ans = []
+        total = 1 << n  # 2^n
+        for i in range(total):
+            b = bin(i)[2:]  # remove "0b"
+            b = b.zfill(n)  # pad with leading zeros
+            ans.append(b)
+        return ans
