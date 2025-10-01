@@ -1,0 +1,86 @@
+// All Unique Permutations of an array
+
+// JAVA
+class Solution {
+    public static ArrayList<ArrayList<Integer>> uniquePerms(int[] arr) {
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        Arrays.sort(arr);  // sort for lexicographic order
+        boolean[] used = new boolean[arr.length];
+        backtrack(arr, used, new ArrayList<>(), res);
+        return res;
+    }
+    
+    private static void backtrack(int[] arr, boolean[] used, ArrayList<Integer> curr, ArrayList<ArrayList<Integer>> res) {
+        if (curr.size() == arr.length) {
+            res.add(new ArrayList<>(curr));
+            return;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            if (used[i]) continue;
+            if (i > 0 && arr[i] == arr[i - 1] && !used[i - 1]) continue; // skip duplicates
+            used[i] = true;
+            curr.add(arr[i]);
+            backtrack(arr, used, curr, res);
+            curr.remove(curr.size() - 1);
+            used[i] = false;
+        }
+    }
+}
+
+
+// PYTHON
+class Solution:
+    def uniquePerms(self, arr):
+        res = []
+        arr.sort()
+        used = [False] * len(arr)
+
+        def backtrack(curr):
+            if len(curr) == len(arr):
+                res.append(curr[:])
+                return
+            for i in range(len(arr)):
+                if used[i]:
+                    continue
+                if i > 0 and arr[i] == arr[i-1] and not used[i-1]:
+                    continue
+                used[i] = True
+                curr.append(arr[i])
+                backtrack(curr)
+                curr.pop()
+                used[i] = False
+
+        backtrack([])
+        return res
+
+
+// CPP
+
+class Solution {
+public:
+    vector<vector<int>> uniquePerms(vector<int> &arr) {
+        vector<vector<int>> res;
+        sort(arr.begin(), arr.end());
+        vector<int> curr;
+        vector<bool> used(arr.size(), false);
+        backtrack(arr, used, curr, res);
+        return res;
+    }
+    
+private:
+    void backtrack(vector<int> &arr, vector<bool> &used, vector<int> &curr, vector<vector<int>> &res) {
+        if (curr.size() == arr.size()) {
+            res.push_back(curr);
+            return;
+        }
+        for (int i = 0; i < arr.size(); i++) {
+            if (used[i]) continue;
+            if (i > 0 && arr[i] == arr[i-1] && !used[i-1]) continue; // skip duplicates
+            used[i] = true;
+            curr.push_back(arr[i]);
+            backtrack(arr, used, curr, res);
+            curr.pop_back();
+            used[i] = false;
+        }
+    }
+};
