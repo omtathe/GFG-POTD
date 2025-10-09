@@ -1,0 +1,35 @@
+// Postorder Traversal
+
+// Java Solution
+
+/* 
+class Node {
+    int data;
+    Node left, right;
+    Node(int val){
+        data = val;
+        left = right = null;
+    }
+}
+*/
+
+class Solution {
+    public ArrayList<Integer> postOrder(Node root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        postOrderTraversal(root, result);
+        return result;
+    }
+    
+    private void postOrderTraversal(Node node, ArrayList<Integer> list) {
+        if (node == null) return;
+        
+        // visit left subtree
+        postOrderTraversal(node.left, list);
+        
+        // visit right subtree
+        postOrderTraversal(node.right, list);
+        
+        // visit root node
+        list.add(node.data);
+    }
+}
